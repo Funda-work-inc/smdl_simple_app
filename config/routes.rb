@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   # 取引管理
-  resources :simple_transactions, only: [:new, :create]
+  resources :simple_transactions, only: [:new, :create, :show]
 end
