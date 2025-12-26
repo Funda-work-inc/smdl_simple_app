@@ -1,0 +1,13 @@
+<header style="position: fixed; top: 0; left: 0; right: 0; background-color: #343a40; padding: 15px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 1000;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="color: white; font-size: 1.5em; font-weight: bold;">
+      📊 SMDL簡易版
+    </div>
+
+    <nav style="display: flex; gap: 20px;">
+      <%= link_to "ユーザー画面", new_simple_transaction_path, style: "color: white; text-decoration: none; padding: 8px 16px; background-color: #28a745; border-radius: 5px; font-weight: bold; transition: background-color 0.3s;" %>
+      <%= link_to "管理者画面", admin_simple_transactions_path, style: "color: white; text-decoration: none; padding: 8px 16px; background-color: #007bff; border-radius: 5px; font-weight: bold; transition: background-color 0.3s;" %>
+    </nav>
+  </div>
+</header>
+<div style="height: 70px;"></div>

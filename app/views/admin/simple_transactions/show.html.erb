@@ -90,8 +90,51 @@
     <% end %>
   </div>
 
+  <div style="background-color: #fff; padding: 20px; border-radius: 5px; border: 1px solid #dee2e6; margin-bottom: 20px;">
+    <h2 style="margin-top: 0;">API呼び出し履歴（<%= @simple_transaction.api_call_logs.count %>件）</h2>
+
+    <% if @simple_transaction.api_call_logs.any? %>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+            <th style="padding: 10px; text-align: left;">API種別</th>
+            <th style="padding: 10px; text-align: left;">エンドポイント</th>
+            <th style="padding: 10px; text-align: center;">ステータス</th>
+            <th style="padding: 10px; text-align: left;">呼び出し日時</th>
+            <th style="padding: 10px; text-align: center;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @simple_transaction.api_call_logs.recent.each do |log| %>
+            <tr style="border-bottom: 1px solid #dee2e6;">
+              <td style="padding: 10px;"><%= log.api_type.upcase %></td>
+              <td style="padding: 10px;"><%= log.endpoint %></td>
+              <td style="padding: 10px; text-align: center;">
+                <% if log.status == 'success' %>
+                  <span style="color: green; background-color: #d4edda; padding: 5px 10px; border-radius: 3px; font-weight: bold;">成功</span>
+                <% else %>
+                  <span style="color: red; background-color: #f8d7da; padding: 5px 10px; border-radius: 3px; font-weight: bold;">エラー</span>
+                <% end %>
+              </td>
+              <td style="padding: 10px;"><%= log.called_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+              <td style="padding: 10px; text-align: center;">
+                <%= link_to "詳細", admin_api_call_log_path(log), style: "color: #007bff; text-decoration: none;" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p style="color: #6c757d;">API呼び出し履歴がありません。</p>
+    <% end %>
+  </div>
+
   <div style="margin-top: 30px;">
+    <%= link_to "更新", edit_admin_simple_transaction_path(@simple_transaction), style: "display: inline-block; background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 10px;" %>
+    <%= link_to "削除", admin_simple_transaction_path(@simple_transaction), method: :delete, data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, style: "display: inline-block; background-color: #dc3545; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 10px;" %>
+    <%= link_to "キャンセル", cancel_admin_simple_transaction_path(@simple_transaction), method: :patch, data: { turbo_method: :patch, turbo_confirm: '本当にキャンセルしますか？' }, style: "display: inline-block; background-color: #ffc107; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 10px;" %>
     <%= link_to "一覧に戻る", admin_simple_transactions_path, style: "display: inline-block; background-color: #6c757d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 10px;" %>
-    <%= link_to "ユーザー画面へ", new_simple_transaction_path, style: "display: inline-block; background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+    <%= link_to "API履歴一覧", admin_api_call_logs_path, style: "display: inline-block; background-color: #17a2b8; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 10px;" %>
+    <%= link_to "ユーザー画面へ", new_simple_transaction_path, style: "display: inline-block; background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
   </div>
 </div>

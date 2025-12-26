@@ -1,0 +1,54 @@
+<h1>API Call Logs</h1>
+
+<div class="filters">
+  <%= form_with url: admin_api_call_logs_path, method: :get, local: true do |f| %>
+    <%= f.label :api_type, "API Type:" %>
+    <%= f.select :api_type, options_for_select([['All', ''], ['SMDL', 'smdl'], ['SAPI', 'sapi']], params[:api_type]), {}, class: 'form-select' %>
+
+    <%= f.label :status, "Status:" %>
+    <%= f.select :status, options_for_select([['All', ''], ['Success', 'success'], ['Error', 'error']], params[:status]), {}, class: 'form-select' %>
+
+    <%= f.submit "Filter", class: 'btn btn-primary' %>
+  <% end %>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>API Type</th>
+      <th>Endpoint</th>
+      <th>Status</th>
+      <th>Transaction ID</th>
+      <th>Called At</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @api_call_logs.each do |log| %>
+      <tr>
+        <td><%= log.id %></td>
+        <td><%= log.api_type %></td>
+        <td><%= log.endpoint %></td>
+        <td>
+          <span class="badge <%= log.status == 'success' ? 'bg-success' : 'bg-danger' %>">
+            <%= log.status %>
+          </span>
+        </td>
+        <td>
+          <% if log.simple_transaction %>
+            <%= link_to log.simple_transaction_id, admin_simple_transaction_path(log.simple_transaction) %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td><%= log.called_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+        <td>
+          <%= link_to 'Details', admin_api_call_log_path(log), class: 'btn btn-sm btn-info' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back to Transactions', admin_simple_transactions_path, class: 'btn btn-secondary' %>

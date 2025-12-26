@@ -1,0 +1,43 @@
+<h1>API Call Log Details</h1>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Basic Information</h5>
+    <p><strong>ID:</strong> <%= @api_call_log.id %></p>
+    <p><strong>API Type:</strong> <%= @api_call_log.api_type %></p>
+    <p><strong>Endpoint:</strong> <%= @api_call_log.endpoint %></p>
+    <p>
+      <strong>Status:</strong>
+      <span class="badge <%= @api_call_log.status == 'success' ? 'bg-success' : 'bg-danger' %>">
+        <%= @api_call_log.status %>
+      </span>
+    </p>
+    <p><strong>Called At:</strong> <%= @api_call_log.called_at.strftime('%Y-%m-%d %H:%M:%S') %></p>
+
+    <% if @api_call_log.simple_transaction %>
+      <p>
+        <strong>Transaction:</strong>
+        <%= link_to "Transaction ##{@api_call_log.simple_transaction_id}", admin_simple_transaction_path(@api_call_log.simple_transaction), class: 'btn btn-sm btn-primary' %>
+      </p>
+    <% end %>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-body">
+    <h5 class="card-title">Request Body</h5>
+    <pre><%= @api_call_log.request_body %></pre>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-body">
+    <h5 class="card-title">Response Body</h5>
+    <pre><%= @api_call_log.response_body %></pre>
+  </div>
+</div>
+
+<div class="mt-3">
+  <%= link_to 'Back to API Logs', admin_api_call_logs_path, class: 'btn btn-secondary' %>
+  <%= link_to 'Back to Transactions', admin_simple_transactions_path, class: 'btn btn-secondary' %>
+</div>
