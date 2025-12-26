@@ -61,7 +61,10 @@
               </td>
               <td style="padding: 12px; text-align: center;"><%= transaction.simple_transaction_items.count %>件</td>
               <td style="padding: 12px; text-align: center;">
-                <%= link_to "詳細", admin_simple_transaction_path(transaction), style: "color: #007bff; text-decoration: none; font-weight: bold;" %>
+                <%= link_to "詳細", admin_simple_transaction_path(transaction), style: "color: #007bff; text-decoration: none; font-weight: bold; margin-right: 10px;" %>
+                <%= link_to "更新", edit_admin_simple_transaction_path(transaction), style: "color: #28a745; text-decoration: none; font-weight: bold; margin-right: 10px;" %>
+                <%= link_to "削除", admin_simple_transaction_path(transaction), method: :delete, data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, style: "color: #dc3545; text-decoration: none; font-weight: bold; margin-right: 10px;" %>
+                <%= link_to "キャンセル", cancel_admin_simple_transaction_path(transaction), method: :patch, data: { turbo_method: :patch, turbo_confirm: '本当にキャンセルしますか？' }, style: "color: #ffc107; text-decoration: none; font-weight: bold;" %>
               </td>
             </tr>
           <% end %>

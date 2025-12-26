@@ -15,8 +15,20 @@ Rails.application.routes.draw do
   # 取引管理（ユーザー画面）
   resources :simple_transactions, only: [:new, :create, :show]
 
+  # API v1
+  namespace :api do
+    namespace :v1 do
+      resources :simple_transactions, only: [:create, :update]
+    end
+  end
+
   # 管理者画面
   namespace :admin do
-    resources :simple_transactions, only: [:index, :show]
+    resources :simple_transactions, only: [:index, :show, :edit, :update, :destroy] do
+      member do
+        patch :cancel
+      end
+    end
+    resources :api_call_logs, only: [:index, :show]
   end
 end

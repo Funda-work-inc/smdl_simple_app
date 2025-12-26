@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_26_171604) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_26_231424) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_call_logs", force: :cascade do |t|
+    t.string "api_type", null: false
+    t.string "endpoint", null: false
+    t.text "request_body"
+    t.text "response_body"
+    t.string "status", null: false
+    t.bigint "simple_transaction_id"
+    t.datetime "called_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["api_type"], name: "index_api_call_logs_on_api_type"
+    t.index ["called_at"], name: "index_api_call_logs_on_called_at"
+    t.index ["simple_transaction_id"], name: "index_api_call_logs_on_simple_transaction_id"
+  end
 
   create_table "simple_transaction_items", force: :cascade do |t|
     t.bigint "simple_transaction_id", null: false
@@ -34,5 +49,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_26_171604) do
     t.index ["status"], name: "index_simple_transactions_on_status"
   end
 
+  add_foreign_key "api_call_logs", "simple_transactions"
   add_foreign_key "simple_transaction_items", "simple_transactions"
 end
