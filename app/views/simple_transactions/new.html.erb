@@ -1,5 +1,5 @@
-<div style="max-width: 600px; margin: 50px auto; padding: 20px;">
-  <h1>取引登録</h1>
+<div style="max-width: 800px; margin: 50px auto; padding: 20px;">
+  <h1>SMDL簡易版 - 取引登録</h1>
 
   <% if @simple_transaction.errors.any? %>
     <div style="color: red; background-color: #fee; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
@@ -13,9 +13,11 @@
   <% end %>
 
   <%= form_with(model: @simple_transaction, local: true) do |form| %>
+    <h2 style="margin-top: 20px; margin-bottom: 10px;">基本情報</h2>
+
     <div style="margin-bottom: 15px;">
-      <%= form.label :amount, "金額" %>
-      <%= form.number_field :amount, style: "width: 100%; padding: 8px; margin-top: 5px;" %>
+      <%= form.label :amount, "取引金額（税込）*" %>
+      <%= form.number_field :amount, style: "width: 100%; padding: 8px; margin-top: 5px;", placeholder: "例: 10000" %>
     </div>
 
     <div style="margin-bottom: 15px;">
@@ -28,8 +30,34 @@
       <%= form.select :status, [['有効', 'active'], ['キャンセル', 'cancelled'], ['削除', 'deleted']], {}, style: "width: 100%; padding: 8px; margin-top: 5px;" %>
     </div>
 
-    <div>
-      <%= form.submit "登録", style: "background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;" %>
+    <h2 style="margin-top: 30px; margin-bottom: 10px;">商品情報（1件以上必須）</h2>
+
+    <div id="items">
+      <%= form.fields_for :simple_transaction_items do |item_form| %>
+        <div class="item-row" style="background-color: #f9f9f9; padding: 15px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #ddd;">
+          <h3 style="margin-top: 0;">商品 <%= item_form.index + 1 %></h3>
+
+          <div style="margin-bottom: 10px;">
+            <%= item_form.label :item_name, "商品名*" %>
+            <%= item_form.text_field :item_name, style: "width: 100%; padding: 8px; margin-top: 5px;", placeholder: "例: テスト商品", maxlength: 255 %>
+          </div>
+
+          <div style="margin-bottom: 10px;">
+            <%= item_form.label :item_count, "個数*" %>
+            <%= item_form.number_field :item_count, style: "width: 100%; padding: 8px; margin-top: 5px;", placeholder: "例: 2", min: 1, max: 99999 %>
+          </div>
+
+          <div style="margin-bottom: 10px;">
+            <%= item_form.label :item_price, "単価（税込）*" %>
+            <%= item_form.number_field :item_price, style: "width: 100%; padding: 8px; margin-top: 5px;", placeholder: "例: 5000", min: 1 %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <%= form.submit "登録", style: "background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px;" %>
+      <%= button_tag "リセット", type: "reset", style: "background-color: #6c757d; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;" %>
     </div>
   <% end %>
 </div>
