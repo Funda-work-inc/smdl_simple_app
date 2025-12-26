@@ -1,0 +1,81 @@
+<div style="max-width: 800px; margin: 50px auto; padding: 20px;">
+  <h1>SMDL簡易版 - 登録結果</h1>
+
+  <% if notice %>
+    <div style="color: green; background-color: #d4edda; padding: 10px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #c3e6cb;">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin-bottom: 20px;">
+    <h2 style="color: green; margin-top: 0;">✓ 登録成功</h2>
+
+    <div style="margin-bottom: 15px;">
+      <strong>取引ID:</strong>
+      <span style="font-size: 1.2em; color: #007bff;"><%= @simple_transaction.id %></span>
+      <span style="color: #6c757d; font-size: 0.9em;">（自動生成）</span>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <strong>登録日時:</strong>
+      <%= @simple_transaction.registration_datetime.strftime('%Y/%m/%d %H:%M:%S') %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <strong>取引金額:</strong>
+      <span style="font-size: 1.2em; color: #28a745;"><%= number_to_currency(@simple_transaction.amount, unit: '¥', precision: 0, format: '%u%n') %></span>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <strong>ステータス:</strong>
+      <% if @simple_transaction.status == 'active' %>
+        <span style="color: green;">有効</span>
+      <% elsif @simple_transaction.status == 'cancelled' %>
+        <span style="color: orange;">キャンセル</span>
+      <% elsif @simple_transaction.status == 'deleted' %>
+        <span style="color: red;">削除</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div style="background-color: #fff; padding: 20px; border-radius: 5px; border: 1px solid #dee2e6; margin-bottom: 20px;">
+    <h2 style="margin-top: 0;">登録商品</h2>
+
+    <% if @simple_transaction.simple_transaction_items.any? %>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+            <th style="padding: 10px; text-align: left;">商品名</th>
+            <th style="padding: 10px; text-align: center;">個数</th>
+            <th style="padding: 10px; text-align: right;">単価（税込）</th>
+            <th style="padding: 10px; text-align: right;">小計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @simple_transaction.simple_transaction_items.each do |item| %>
+            <tr style="border-bottom: 1px solid #dee2e6;">
+              <td style="padding: 10px;"><%= item.item_name %></td>
+              <td style="padding: 10px; text-align: center;"><%= item.item_count %></td>
+              <td style="padding: 10px; text-align: right;"><%= number_to_currency(item.item_price, unit: '¥', precision: 0, format: '%u%n') %></td>
+              <td style="padding: 10px; text-align: right;"><%= number_to_currency(item.item_price * item.item_count, unit: '¥', precision: 0, format: '%u%n') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr style="background-color: #f8f9fa; font-weight: bold;">
+            <td colspan="3" style="padding: 10px; text-align: right;">合計金額:</td>
+            <td style="padding: 10px; text-align: right; color: #28a745; font-size: 1.1em;">
+              <%= number_to_currency(@simple_transaction.amount, unit: '¥', precision: 0, format: '%u%n') %>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    <% else %>
+      <p style="color: #6c757d;">商品情報がありません。</p>
+    <% end %>
+  </div>
+
+  <div style="margin-top: 30px;">
+    <%= link_to "新しい取引を登録", new_simple_transaction_path, style: "display: inline-block; background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+  </div>
+</div>

@@ -9,10 +9,14 @@ class SimpleTransactionsController < ApplicationController
     @simple_transaction = SimpleTransaction.new(simple_transaction_params)
 
     if @simple_transaction.save
-      redirect_to new_simple_transaction_path, notice: '取引を登録しました。'
+      redirect_to simple_transaction_path(@simple_transaction), notice: '取引を登録しました。'
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def show
+    @simple_transaction = SimpleTransaction.find(params[:id])
   end
 
   private
