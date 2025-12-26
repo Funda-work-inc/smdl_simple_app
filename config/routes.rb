@@ -11,4 +11,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  # 取引管理
+  resources :simple_transactions, only: [:new, :create]
 end

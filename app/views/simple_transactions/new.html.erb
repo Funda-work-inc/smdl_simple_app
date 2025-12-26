@@ -1,0 +1,35 @@
+<div style="max-width: 600px; margin: 50px auto; padding: 20px;">
+  <h1>取引登録</h1>
+
+  <% if @simple_transaction.errors.any? %>
+    <div style="color: red; background-color: #fee; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
+      <h2><%= pluralize(@simple_transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+      <ul>
+        <% @simple_transaction.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_with(model: @simple_transaction, local: true) do |form| %>
+    <div style="margin-bottom: 15px;">
+      <%= form.label :amount, "金額" %>
+      <%= form.number_field :amount, style: "width: 100%; padding: 8px; margin-top: 5px;" %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <%= form.label :registration_datetime, "登録日時" %>
+      <%= form.datetime_local_field :registration_datetime, value: Time.current.strftime("%Y-%m-%dT%H:%M"), style: "width: 100%; padding: 8px; margin-top: 5px;" %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <%= form.label :status, "ステータス" %>
+      <%= form.select :status, [['有効', 'active'], ['キャンセル', 'cancelled'], ['削除', 'deleted']], {}, style: "width: 100%; padding: 8px; margin-top: 5px;" %>
+    </div>
+
+    <div>
+      <%= form.submit "登録", style: "background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;" %>
+    </div>
+  <% end %>
+</div>
