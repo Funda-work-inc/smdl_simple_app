@@ -1,16 +1,24 @@
-# SMDL簡易版ウェブアプリ
+# README
 
-SMDL（決済モジュール）の簡易版ウェブアプリケーション
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-## 概要
-- 取引登録機能
-- 取引管理機能（管理者画面）
-- 取引登録API
+Things you may want to cover:
 
-## 技術スタック
-- Ruby on Rails
-- PostgreSQL
-- TDD（テスト駆動開発）
+* Ruby version
 
-## 開発者
-Created by 才人 with ルイズ 💕
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
