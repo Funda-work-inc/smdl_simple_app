@@ -1,0 +1,78 @@
+<div style="max-width: 1200px; margin: 50px auto; padding: 20px;">
+  <h1>SMDL簡易版 - 管理者画面 - 取引一覧</h1>
+
+  <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin-bottom: 20px;">
+    <h2 style="margin-top: 0;">検索・フィルタ</h2>
+
+    <%= form_with url: admin_simple_transactions_path, method: :get, local: true do |f| %>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
+        <div>
+          <%= f.label :id, "取引ID" %>
+          <%= f.text_field :id, value: params[:id], style: "width: 100%; padding: 8px; margin-top: 5px;", placeholder: "例: 1" %>
+        </div>
+
+        <div>
+          <%= f.label :date_from, "登録日（開始）" %>
+          <%= f.date_field :date_from, value: params[:date_from], style: "width: 100%; padding: 8px; margin-top: 5px;" %>
+        </div>
+
+        <div>
+          <%= f.label :date_to, "登録日（終了）" %>
+          <%= f.date_field :date_to, value: params[:date_to], style: "width: 100%; padding: 8px; margin-top: 5px;" %>
+        </div>
+      </div>
+
+      <div>
+        <%= f.submit "検索", style: "background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px;" %>
+        <%= link_to "クリア", admin_simple_transactions_path, style: "display: inline-block; background-color: #6c757d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div style="background-color: #fff; padding: 20px; border-radius: 5px; border: 1px solid #dee2e6;">
+    <h2 style="margin-top: 0;">取引一覧（<%= @simple_transactions.count %>件）</h2>
+
+    <% if @simple_transactions.any? %>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+            <th style="padding: 12px; text-align: left;">取引ID</th>
+            <th style="padding: 12px; text-align: left;">登録日時</th>
+            <th style="padding: 12px; text-align: right;">金額</th>
+            <th style="padding: 12px; text-align: center;">ステータス</th>
+            <th style="padding: 12px; text-align: center;">商品数</th>
+            <th style="padding: 12px; text-align: center;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @simple_transactions.each do |transaction| %>
+            <tr style="border-bottom: 1px solid #dee2e6;">
+              <td style="padding: 12px;"><%= transaction.id %></td>
+              <td style="padding: 12px;"><%= transaction.registration_datetime.strftime('%Y/%m/%d %H:%M') %></td>
+              <td style="padding: 12px; text-align: right;"><%= number_to_currency(transaction.amount, unit: '¥', precision: 0, format: '%u%n') %></td>
+              <td style="padding: 12px; text-align: center;">
+                <% if transaction.status == 'active' %>
+                  <span style="color: green; background-color: #d4edda; padding: 5px 10px; border-radius: 3px;">有効</span>
+                <% elsif transaction.status == 'cancelled' %>
+                  <span style="color: orange; background-color: #fff3cd; padding: 5px 10px; border-radius: 3px;">キャンセル</span>
+                <% elsif transaction.status == 'deleted' %>
+                  <span style="color: red; background-color: #f8d7da; padding: 5px 10px; border-radius: 3px;">削除</span>
+                <% end %>
+              </td>
+              <td style="padding: 12px; text-align: center;"><%= transaction.simple_transaction_items.count %>件</td>
+              <td style="padding: 12px; text-align: center;">
+                <%= link_to "詳細", admin_simple_transaction_path(transaction), style: "color: #007bff; text-decoration: none; font-weight: bold;" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p style="color: #6c757d; text-align: center; padding: 20px;">取引がありません。</p>
+    <% end %>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <%= link_to "ユーザー画面へ", new_simple_transaction_path, style: "display: inline-block; background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+  </div>
+</div>
