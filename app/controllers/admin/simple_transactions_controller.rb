@@ -39,13 +39,13 @@ module Admin
 
     def destroy
       @simple_transaction = SimpleTransaction.find(params[:id])
-      @simple_transaction.update!(status: 'deleted')
+      @simple_transaction.soft_delete!
       redirect_to admin_simple_transactions_path, notice: '取引を削除しました'
     end
 
     def cancel
       @simple_transaction = SimpleTransaction.find(params[:id])
-      @simple_transaction.update!(status: 'cancelled')
+      @simple_transaction.cancel!
       redirect_to admin_simple_transaction_path(@simple_transaction), notice: '取引をキャンセルしました'
     end
 
