@@ -4,9 +4,12 @@
       📊 SMDL簡易版
     </div>
 
-    <nav style="display: flex; gap: 20px;">
+    <nav style="display: flex; gap: 15px; align-items: center;">
       <%= link_to "ユーザー画面", new_simple_transaction_path, style: "color: white; text-decoration: none; padding: 8px 16px; background-color: #28a745; border-radius: 5px; font-weight: bold; transition: background-color 0.3s;" %>
-      <%= link_to "管理者画面", admin_simple_transactions_path, style: "color: white; text-decoration: none; padding: 8px 16px; background-color: #007bff; border-radius: 5px; font-weight: bold; transition: background-color 0.3s;" %>
+      <%= link_to "取引一覧", admin_simple_transactions_path, style: "color: white; text-decoration: none; padding: 8px 16px; background-color: #007bff; border-radius: 5px; font-weight: bold; transition: background-color 0.3s;" %>
+      <%= link_to "API履歴", admin_api_call_logs_path, style: "color: white; text-decoration: none; padding: 8px 16px; background-color: #17a2b8; border-radius: 5px; font-weight: bold; transition: background-color 0.3s;" %>
+      <div style="border-left: 1px solid #6c757d; height: 20px; margin: 0 5px;"></div>
+      <%= link_to "atoneWEB", "http://localhost:3001", target: "_blank", style: "color: white; text-decoration: none; padding: 8px 16px; background-color: #6f42c1; border-radius: 5px; font-weight: bold; transition: background-color 0.3s;" %>
     </nav>
   </div>
 </header>

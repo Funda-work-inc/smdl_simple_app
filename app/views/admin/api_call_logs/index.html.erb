@@ -51,4 +51,8 @@
   </tbody>
 </table>
 
-<%= link_to 'Back to Transactions', admin_simple_transactions_path, class: 'btn btn-secondary' %>
+<div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
+  <h3 style="margin-bottom: 15px; color: #6c757d; font-size: 1em;">画面遷移</h3>
+  <%= link_to '取引一覧', admin_simple_transactions_path, class: 'btn btn-secondary', style: "margin-right: 10px;" %>
+  <%= link_to 'ユーザー画面', new_simple_transaction_path, class: 'btn btn-success' %>
+</div>

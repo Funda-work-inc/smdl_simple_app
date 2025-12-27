@@ -75,7 +75,10 @@
     <% end %>
   </div>
 
-  <div style="margin-top: 30px;">
-    <%= link_to "新しい取引を登録", new_simple_transaction_path, style: "display: inline-block; background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+  <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
+    <h3 style="margin-bottom: 15px; color: #6c757d; font-size: 1em;">画面遷移</h3>
+    <%= link_to "新しい取引を登録", new_simple_transaction_path, style: "display: inline-block; background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 10px;" %>
+    <%= link_to "取引一覧", admin_simple_transactions_path, style: "display: inline-block; background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 10px;" %>
+    <%= link_to "API履歴", admin_api_call_logs_path, style: "display: inline-block; background-color: #17a2b8; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
   </div>
 </div>
