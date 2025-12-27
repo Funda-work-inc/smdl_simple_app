@@ -11,6 +11,15 @@ module Admin
         @api_call_logs = @api_call_logs.where(status: params[:status])
       end
 
+      if params[:date_from].present?
+        date_from = Date.parse(params[:date_from]).beginning_of_day
+        @api_call_logs = @api_call_logs.where('called_at >= ?', date_from)
+      end
+
+      if params[:endpoint].present?
+        @api_call_logs = @api_call_logs.where('endpoint LIKE ?', "%#{params[:endpoint]}%")
+      end
+
       @api_call_logs = @api_call_logs.limit(100)
     end
 
