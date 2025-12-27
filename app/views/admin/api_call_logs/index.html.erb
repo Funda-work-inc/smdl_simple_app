@@ -1,6 +1,7 @@
-<h1>API Call Logs</h1>
+<div style="max-width: 1200px; margin: 50px auto; padding: 20px;">
+  <h1 style="color: #17a2b8; border-bottom: 3px solid #17a2b8; padding-bottom: 10px;">【管理者】SMDL簡易版 - API呼び出し履歴</h1>
 
-<div class="filters">
+<div class="filters" style="margin-top: 20px;">
   <%= form_with url: admin_api_call_logs_path, method: :get, local: true do |f| %>
     <%= f.label :api_type, "API Type:" %>
     <%= f.select :api_type, options_for_select([['All', ''], ['SMDL', 'smdl'], ['SAPI', 'sapi']], params[:api_type]), {}, class: 'form-select' %>
@@ -50,9 +51,4 @@
     <% end %>
   </tbody>
 </table>
-
-<div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
-  <h3 style="margin-bottom: 15px; color: #6c757d; font-size: 1em;">画面遷移</h3>
-  <%= link_to '取引一覧', admin_simple_transactions_path, class: 'btn btn-secondary', style: "margin-right: 10px;" %>
-  <%= link_to 'ユーザー画面', new_simple_transaction_path, class: 'btn btn-success' %>
 </div>
